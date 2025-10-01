@@ -2394,8 +2394,11 @@ function majEsiStatut() {
   champStatut.value = computeStatut(age, sexe);
 }
 
-// Calcul si déjà des valeurs sont présentes
-document.addEventListener("DOMContentLoaded", majEsiStatut);
+// on "écoute" les 2 champs en même temps
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("esiAgeNum").addEventListener("input", majEsiStatut);
+  document.getElementById("esiSexe").addEventListener("change", majEsiStatut);
+});
 </script>
 
 </body>
