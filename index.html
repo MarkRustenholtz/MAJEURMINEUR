@@ -2412,6 +2412,54 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("passeurAgeNum").addEventListener("input", majPasseurStatut);
   document.getElementById("passeurSexe").addEventListener("change", majPasseurStatut);
 });
+	document.getElementById("resetBtn").addEventListener("click", () => {
+  if(confirm("Voulez-vous vraiment effacer les données sauvegardées ?")) {
+    
+    // Sauvegarde du premier ESR (si présent)
+    const premierEsr = (state.esrList && state.esrList.length > 0) ? state.esrList[0] : null;
+    
+    // Réinitialisation complète de state
+    const site = state.site; // si tu veux garder aussi le site
+    Object.assign(state, {
+      site: site,   // tu peux décider de garder ou pas
+      date: '',
+      heureDebut: '',
+      heureFin: '',
+      esrList: [],
+      cameraNum: '',
+      cameraESR: '',
+      tablette1Num: '',
+      tablette1ESR: '',
+      tablette2Num: '',
+      tablette2ESR: '',
+      vehiculeService: '',
+      vehicules: { train: 0, bus: 0, vl: 0, pl: 0 },
+      cv: { train: 0, bus: 0, vl: 0, pl: 0 },
+      cf: { train: 0, bus: 0, vl: 0, pl: 0 },
+      esiList: [],
+      passeurList: [],
+      observations: '',
+      deroulement: '',
+      pulsar: '',
+      editingEsrIndex: null,
+      editingEsiIndex: null,
+      editingPasseurIndex: null,
+      resumeEsr: '',
+      scannedNigends: []
+    });
+
+    // On remet le premier ESR s’il existait
+    if(premierEsr) {
+      state.esrList.push(premierEsr);
+    }
+
+    // On met à jour l’écran et on sauvegarde
+    updateUI();
+    saveToStorage();
+
+    alert("Les données ont été effacées (sauf le premier ESR).");
+  }
+});
 </script>
 
 </body>
