@@ -791,12 +791,9 @@ html, body {
   <div class="page-content">
     <div id="esiList"></div>
     <div style="margin-top: 20px;">
-      <select id="esiAge" aria-label="Majeur ou mineur">
+      <input type="text" id="esiAge" placeholder="Majeur ou mineur" readonly />
         <option value="">Majeur(e)/Mineur(e)</option>
-        <option value="Majeur">Majeur</option>
-        <option value="Mineur">Mineur</option>
-        <option value="Majeure">Majeure</option>
-        <option value="Mineure">Mineure</option>
+        
       </select>
       <select id="esiSexe" aria-label="Sexe H/F">
         <option value="">Homme/Femme</option>
@@ -2384,26 +2381,20 @@ afficherHistorique();
   console.debug("ESI+Visa: visaData initialisé pour", allCountries.length, "pays. Voir window._esiVisaData.");
 })();
 	function computeStatut(age, sexe) {
-  if (isNaN(age) || age === null || age === undefined) return "";
-  if (!sexe) return "";
+  if (isNaN(age) || !sexe) return "";
   if (age >= 18) return (sexe === "Femme") ? "Majeure" : "Majeur";
   return (sexe === "Femme") ? "Mineure" : "Mineur";
 }
 
 function majEsiStatut() {
-  const ageInput = document.getElementById("esiAgeNum");
-  const sexeSelect = document.getElementById("esiSexe");
-  const statutSelect = document.getElementById("esiAge");
+  const age = parseInt(document.getElementById("esiAgeNum").value, 10);
+  const sexe = document.getElementById("esiSexe").value;
+  const champStatut = document.getElementById("esiAge");
 
-  const age = parseInt(ageInput.value, 10);
-  const sexe = sexeSelect.value;
-
-  const statut = computeStatut(age, sexe);
-  // Met à jour automatiquement le champ select
-  statutSelect.value = statut || "";
+  champStatut.value = computeStatut(age, sexe);
 }
 
-// Au cas où des valeurs sont déjà présentes au chargement
+// Calcul si déjà des valeurs sont présentes
 document.addEventListener("DOMContentLoaded", majEsiStatut);
 </script>
 
