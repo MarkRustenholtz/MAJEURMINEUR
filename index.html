@@ -793,8 +793,7 @@ html, body {
     <div style="margin-top: 20px;">
       <input type="text" id="esiAge" placeholder="Majeur ou mineur" readonly />
         <option value="">Majeur(e)/Mineur(e)</option>
-        
-      </select>
+
       <select id="esiSexe" aria-label="Sexe H/F">
         <option value="">Homme/Femme</option>
         <option value="Homme">Homme</option>
@@ -825,13 +824,9 @@ html, body {
   <div class="page-content">
     <div id="passeurList"></div>
     <div style="margin-top: 20px;">
-      <select id="passeurAge" aria-label="Majeur ou mineur">
+      <input type="text" id="passeurAge" placeholder="Majeur ou mineur" readonly />
         <option value="">Majeur(e)/Mineur(e)</option>
-        <option value="Majeur">Majeur</option>
-        <option value="Mineur">Mineur</option>
-        <option value="Majeure">Majeure</option>
-        <option value="Mineure">Mineure</option>
-      </select>
+      
       <select id="passeurSexe" aria-label="Sexe H/F">
         <option value="">Homme/Femme</option>
         <option value="Homme">Homme</option>
@@ -2398,6 +2393,24 @@ function majEsiStatut() {
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("esiAgeNum").addEventListener("input", majEsiStatut);
   document.getElementById("esiSexe").addEventListener("change", majEsiStatut);
+});
+	function computePasseurStatut(age, sexe) {
+  if (isNaN(age) || !sexe) return "";
+  if (age >= 18) return (sexe === "Femme") ? "Majeure" : "Majeur";
+  return (sexe === "Femme") ? "Mineure" : "Mineur";
+}
+
+function majPasseurStatut() {
+  const age = parseInt(document.getElementById("passeurAgeNum").value, 10);
+  const sexe = document.getElementById("passeurSexe").value;
+  const champStatut = document.getElementById("passeurAge");
+
+  champStatut.value = computePasseurStatut(age, sexe);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("passeurAgeNum").addEventListener("input", majPasseurStatut);
+  document.getElementById("passeurSexe").addEventListener("change", majPasseurStatut);
 });
 </script>
 
