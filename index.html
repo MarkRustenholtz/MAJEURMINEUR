@@ -803,7 +803,8 @@ html, body {
         <option value="Homme">Homme</option>
         <option value="Femme">Femme</option>
       </select>
-      <input type="number" id="esiAgeNum" placeholder="Âge (chiffre)" min="0" style="width: 100px;" />
+      <input type="number" id="esiAgeNum" placeholder="Âge (chiffre)" min="0" style="width: 100px;" 
+		oninput="majEsiStatut()" />
       <input type="text" id="esiNationalite" placeholder="Nationalité" />
       <input type="text" id="esiLieu" placeholder="Lieu interpellation" />
       <label for="esiHeure">Heure interpellation :</label>
@@ -2382,6 +2383,28 @@ afficherHistorique();
   window._esiVisaData = { allCountries, neverNeed, shortExempt, visaData, biometricExemptions };
   console.debug("ESI+Visa: visaData initialisé pour", allCountries.length, "pays. Voir window._esiVisaData.");
 })();
+	function computeStatut(age, sexe) {
+  if (isNaN(age) || age === null || age === undefined) return "";
+  if (!sexe) return "";
+  if (age >= 18) return (sexe === "Femme") ? "Majeure" : "Majeur";
+  return (sexe === "Femme") ? "Mineure" : "Mineur";
+}
+
+function majEsiStatut() {
+  const ageInput = document.getElementById("esiAgeNum");
+  const sexeSelect = document.getElementById("esiSexe");
+  const statutSelect = document.getElementById("esiAge");
+
+  const age = parseInt(ageInput.value, 10);
+  const sexe = sexeSelect.value;
+
+  const statut = computeStatut(age, sexe);
+  // Met à jour automatiquement le champ select
+  statutSelect.value = statut || "";
+}
+
+// Au cas où des valeurs sont déjà présentes au chargement
+document.addEventListener("DOMContentLoaded", majEsiStatut);
 </script>
 
 </body>
