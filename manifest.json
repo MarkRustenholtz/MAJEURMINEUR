@@ -1,6 +1,6 @@
 {
-  "name": "gendarmerie",
-  "short_name": "Gendarmerie",
+  "name": "Gend LIMES",
+  "short_name": "GEND LIMES",
   "description": "Application PWA pour générer les comptes rendus de missions",
   "start_url": "./index.html",
   "display": "standalone",
@@ -19,4 +19,5 @@
     }
   ]
 }
+
 
